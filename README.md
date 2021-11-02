@@ -21,6 +21,6 @@ More details coming on hardware and software installation and design.
 
 ...
 
-https://github.com/Azure/azure-sdk-for-c/pull/1960
+https://github.com/Azure/azure-sdk-for-c/issues/1796
 
 https://github.com/Azure/azure-iot-arduino/issues/136
