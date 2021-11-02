@@ -7,6 +7,18 @@ See https://github.com/jameszah/ESP32-AI-CAM/tree/main/samples for some sample p
 
 More details coming on hardware and software installation and design.
 
+## Hardware - simple
+
+## Hardware - better
+
+## Hardware - nice
+
+## Software Installation
+
+## Compile Time Paramaters
+
+## Azure Subscription and setting up Computer Vision, IOTHub, Blob Storage
+
 ...
 
 https://github.com/Azure/azure-sdk-for-c/pull/1960
