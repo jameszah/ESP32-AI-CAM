@@ -1,4 +1,4 @@
-
+<img src="./samples/=camera=_=cam1=,=date=_=2021-11-02=,=time=_=01-39-12=,=temp=_=23.4=,=humid=_=34.1=,=press=_=089.3=,=lux=_=048.3=,=reason=_=axdl3=,=seq=_=001=.jpg">   
 19:39:11.685 -> Connecting to canadacentral.api.cognitive.microsoft.com:443... Send 204000 bytes in 2.7 seconds for 598.7 kbps
 19:39:16.046 -> 
 19:39:16.984 -> {"description":{"tags":["text","person","indoor","staring"],"captions":[{"text":"Ludwig van Beethoven with long hair","confidence":0.41722583770751953}]},"requestId":"b7089b84-ac13-4163-a1d4-43cc289b85cb","metadata":{"height":1200,"width":1600,"format":"Jpeg"},"modelVersion":"2021-05-01"}
