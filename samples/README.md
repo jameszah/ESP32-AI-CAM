@@ -1,4 +1,5 @@
-<img src="./samples/1.jpg">   
+<img src="../samples/{=camera=_=cam1=,=date=_=2021-11-02=,=time=_=01-39-12=,=temp=_=23.4=,=humid=_=34.1=,=press=_=089.3=,=lux=_=048.3=,=reason=_=axdl3=,=seq=_=001=}.jpg">   
+
 {=camera=_=cam1=,=date=_=2021-11-02=,=time=_=01-39-12=,=temp=_=23.4=,=humid=_=34.1=,=press=_=089.3=,=lux=_=048.3=,=reason=_=axdl3=,=seq=_=001=}.jpg
 19:39:11.685 -> Connecting to canadacentral.api.cognitive.microsoft.com:443... Send 204000 bytes in 2.7 seconds for 598.7 kbps
 19:39:16.046 -> 
