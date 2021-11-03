@@ -38,7 +38,7 @@ And the following libraries from Sprakfun for the I2C sensors (all current):
 And the JSON Library to unpack the response from Azure Computer Vision:
    - ArduinoJSON by Benoit Blanchon 6.16.1
 
-That is all easy, but the complex part comes next.  This system uses the Azure IOTHub system which is designed to connect small sensors Azure to report temperatures and pressues which are small chunks of data.  But in the past it seems to have supported larger chunks of data, such as Blobs - Binary Large Objects.  Support for this seems to have disappeared, so to add it back, due the following.  You have to grab this two files:
+That is all easy, but the complex part comes next.  This system uses the Azure IOTHub system which is designed to connect small sensors Azure to report temperatures and pressues which are small chunks of data.  But in the past it seems to have supported larger chunks of data, such as Blobs - Binary Large Objects.  Support for this seems to have disappeared, so to add it back, do the following.  You have to grab these two files:
 
 https://github.com/Azure/azure-iot-arduino/blob/jbobotek-patch-1/src/blob.c   
 https://github.com/Azure/azure-iot-arduino/blob/jbobotek-patch-1/src/blob.h   
