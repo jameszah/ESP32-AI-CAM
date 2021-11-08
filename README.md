@@ -161,6 +161,7 @@ You get the sensor readings, plus the reason for the wakeup, and the sequence nu
 
 ...
 
-https://github.com/Azure/azure-sdk-for-c/issues/1796
+A few lines of code for the machine vision from here https://github.com/robotzero1/esp32cam-cognitive-scene
+You can buy RobotZero a coffee over there.
 
-https://github.com/Azure/azure-iot-arduino/issues/136
+Otherwize some demo programs from Sparkfun sensors and the Microsoft Azure IOT libraries.
