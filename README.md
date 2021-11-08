@@ -27,6 +27,15 @@ Solder it all together - put the light sensor near the lense and put the tempera
 
 List of pre-made parts from Adafruit that can be connected without soldering or breadbaords. (coming)
 
+## Hardware - updates
+
+Some possible changes to the hardware worth trying.
+
+1.  Add a vibration sensor or reed switch to make a simpler method of waking up the ESP32.  
+2.  Add an i2c real-time clock, so the ESP32 can get the time and start its work without first starting wifi to get the time.
+3.  Add a i2c GPS module if your camera is going to be moving. (expensive)
+4.  Add a i2c battery monitor to report battery capacity, and report it to Azure to alert a human to replace/rechange the battery.
+
 ## Software Installation
 
 As of Nov 3, 2021:
@@ -70,6 +79,7 @@ https://github.com/Azure/azure-iot-arduino/issues/136
 
 Another alternative is to use another Azure library called azure-sdk-for-c https://github.com/Azure/azure-sdk-for-c, where they are just in the process of re-adding blob support into that system https://github.com/Azure/azure-sdk-for-c/issues/1796.  It remains to be seen if that will fit into the memory available on the esp32, and whether this libcurl issue still has to be addressed.  https://github.com/Azure/azure-iot-arduino/issues/135#issue-1024008479
 
+A previous version of the program had two channels to communicate with the IOTHub.  First there is the normal IOT channel which sends small packets of sensor data repeatedly to the hub (50 bytes or less), and second the BLOB upload which sends a jpeg (500,000 bytes).  But with the memory contraints of the ESP32, I could not run these two channels plus the camera all at the same time, so I removed the mqtt sensor upload, and just sent those 50 bytes along with the BLOB.  If you are doing lots of sensor updates, it would be worth re-introducing that simpler mqtt code.
 
 ## Compile Time Paramaters
 
@@ -106,6 +116,8 @@ Finally you can take several picture and store them in memory during a wakeup, a
 
 You need a free Azure account to use this program.  You have to give your credit card to get a free account, which gives you most everything free for a month, including $200 of non-free stuff.  Plus you get a bunch of other things free for a year.  And another group of things free forever.  I didn't spend any of my $200 developing this, and the IOTHUb should be free forever.  The storage could start costing me something after a year, or sooner if you are taking 1000's of picture per day and storing them all, so keep an eye on your costs.
 
+https://azure.microsoft.com/en-us/free/free-account-faq/
+
 Within Azure, you have to set up the following.
 
 1.  Resource Group within you local Azure region.
@@ -141,6 +153,11 @@ jzLogger/20211103/
 You get the sensor readings, plus the reason for the wakeup, and the sequence number of the multiple pictures per wakeup, and the name of the camera.  Plus the date for the folder, and the name of you IOTHub device.
 
 
+## Software Enhancements
+
+1.  Read the ssid/password, and IOTHub and Machine Vision connection String from the SD card, store them in esprom, and then delete the file from the SD card, so you can use idential software on all your ESP32-AI-CAM, and change the personality of the device just by putting a text file on the SD card, and rebooting the device.
+2.  Delete old file from the SD card to make sure it does not fill up.  You could also add a function to upload old photos if there was a WiFi connection failure.
+3.  Add the code for a battery monitor and report voltage in the normal sensor update. (see new hardware)
 
 ...
 
