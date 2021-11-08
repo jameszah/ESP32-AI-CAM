@@ -121,10 +121,10 @@ https://azure.microsoft.com/en-us/free/free-account-faq/
 Within Azure, you have to set up the following.
 
 1.  Resource Group within you local Azure region.
-2.  IOTHub within you Resource Group and Azure region - an F1 free hub always multiple devices (ESP32-CAMs), and up to 8000 messages per day, for free, forever.
+2.  IOTHub within you Resource Group and Azure region - an F1 free hub allows multiple devices (ESP32-CAMs), and up to 8000 messages per day, for free, forever.
 3.  Each ESP32-CAM must be set up as a "Devices" within that IOTHub, which will give you a connection string.
 4.  Set up a Storage Account (within the resource group, within your Azure region), and then set up a Storage container within that Storage Account.
-5.  Back in the IOTHub, you need to setup that Storage Account and Storaeg Container in "File Upload" section of the IOTHub.  The directory structure within the Stoage Container is set in the software.  The program creates a folder for everyday named "20211108" or YYYYMMDD, and then all the files within the container.
+5.  Back in the IOTHub, you need to setup that Storage Account and Storage Container in "File Upload" section of the IOTHub.  The directory structure within the Stoage Container is set in the software.  The program creates a folder for every day named "20211108" or YYYYMMDD, and then all the files within the container.
 6.  Set up a Computer Vision account within Azure -- the free pricing tear gives you 20 per minute, and 5000 per month.
 
 You can access the picture through the Storage Account and Storage Container, and the the name of the device (ESP32-CAM) and then the YYYYMMDD folder.  They are stored as BLOBs (binary large object) rather than the traditional file system.
