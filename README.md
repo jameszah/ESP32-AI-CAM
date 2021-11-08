@@ -9,9 +9,23 @@ More details coming on hardware and software installation and design.
 
 ## Hardware - simple
 
+It is simpler than it looks.  Just 5v to ESP32, and 3.3v to all sensors, and ground everywhere.  Then use SDA/SCL is GPIO 13 and GPIO 0.  I hoped to use the 13 and 12, but the ESP32 uses the GPIO 12 for some sort boot strapping and must not be high on esp32 boot, and the SDA/SCL cannot be trusted on that.  So I re-used the GPIO 0, which can be be pulled low on boot to put the chip into programming mode.  Also GPIO 12, 13, and 4 are part of the SPI which drives the SD card, but if you put that SD interface into 1-bit mode in software, then those pins are avaialble.  GPIO 4 is also used by the ESP32-CAM module to drive the bright LED, and I also re-used it again to carry the interupt from the ADXL to wake up the board.  The interupt is only used when the ESP32 is in deepsleep, so he LED will turn on after the interupt and before the ESP32 wakes up and shuts it off.  The SD card works fine with the GPIO 13 and GPIO 4 used for their other jobs -- but I have had a few cheap SD cards that have complained about all these signals on its unused data pins.  
+
+The leds on the two ADXL interupts are used to experiment with the board to see when the interupts trigger.  The diagram shows GPIO 4 wired to INT1 which the software sets up as a "motion" detector.  INT2 is set up as a "tap" detector.  Your use case may fiddle with these if you are waiting for a door-knock to turn on the camera.
+
+To program, power-off the ESP32, pull GPIO 0 to ground, then power-on the ESP32.
+
+<img src="./esp32-ai-cam.v12.jpg"> 
+
+https://github.com/jameszah/ESP32-AI-CAM/blob/main/esp32-ai-cam.v12.jpg
+
 ## Hardware - better
 
+Solder it all together - put the light sensor near the lense and put the temperature sensor away from the ESP32, and keep the anteanna of the ESP32 away from everything.
+
 ## Hardware - nice
+
+List of pre-made parts from Adafruit that can be connected without soldering or breadbaords. (coming)
 
 ## Software Installation
 
@@ -59,7 +73,71 @@ Another alternative is to use another Azure library called azure-sdk-for-c https
 
 ## Compile Time Paramaters
 
+The file settings.h contain the copile time parameters.
+
+```
+#define IOT_CONFIG_WIFI_SSID            "..."
+#define IOT_CONFIG_WIFI_PASSWORD        "..."
+
+/*String containing Hostname, Device Id & Device Key in the format:                         */
+/*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
+/*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
+//static const char* connectionString = "[device connection string]";
+static const char* connectionString = "HostName=myhubname.azure-devices.net;DeviceId=mydevicename;SharedAccessKey=............................................";
+
+const char* host = "myazureregion.api.cognitive.microsoft.com"; 
+const char* Ocp_Apim_Subscription_Key = "................................";
+const int Port = 443;
+
+#define ms_between_pictures 10000
+#define number_of_pictures 2
+```
+
+You need your ssid name and password.
+
+You need to setup an IOTHub on Azure and give it you IOTHub connection string and password for the Upload-to-blob function.
+
+And finally you need to setup a Machine Vision function on Azure to to get the immediate photo analysis, and provide your local azure site, and your subscription key.
+
+Finally you can take several picture and store them in memory during a wakeup, and then send them all to Azure when they are done.  The final picture is sent to the machine vision for quick analysis, but all the picture are uploaded to blob for analysis and records at the Azure level.  So the final two parameters are the number of pictures, and the delay between pictures in mill-seconds.  You have to operate within the bounds of available psram memory.  The ESP32-CAM has 4MB or psram, and about 3MB is available for this function, and an indoor light scene (a little dull) should not use more the 512 kb for a ov5640 QSXGA 2560x1920 jpeg, so you can fit 5 probably.
+
+
 ## Azure Subscription and setting up Computer Vision, IOTHub, Blob Storage
+
+Within Azure, you have to set up the following.
+
+You need a free Azure account to use this program.  You have to give your credit card to get a free account, which gives you most everything free for a month, including $200 of non-free stuff.  Plus you get a bunch of other things free for a year.  And another group of things free forever.  I didn't spend any of my $200 developing this, and the IOTHUb should be free forever.  The storage could start costing me something after a year, or sooner if you are taking 1000's of picture per day and storing them all, so keep an eye on your costs.
+
+1.  Resource Group within you local Azure region.
+2.  IOTHub within you Resource Group and Azure region - an F1 free hub always multiple devices (ESP32-CAMs), and up to 8000 messages per deay, for free, forever.
+3.  Each ESP32-CAM must be set up as a "Devices" within that IOTHub, wheich will give you a connection string.
+4.  Set up a Storage Account (within the resource group, within your Azure region), and then set up a Storage container with that Storage Account.
+5.  Back in the IOTHub, you need to setup that Storage Account and Storaeg Container in "File Upload" section of the IOTHub.  The directory structure within the Stoage Container is set in the software.  The program creates a folder for everyday named "20211108" or YYYYMMDD, and then all the files within the conatiner.
+6.  Set up a Computer Vision account within Azure -- the free pricing tear gives you 20 per minute, and 5000 per month.
+
+jzLogger/20211103/{=camera=_=cam1=,=date=_=2021-11-03=,=time=_=05-01-12=,=temp=_=21.1=,=humid=_=36.8=,=press=_=089.4=,=lux=_=1214.1=,=reason=_=timer=,=seq=_=001=}.jpg
+
+After that edit, you get the nice JSON here: 
+
+jzLogger/20211103/  
+{"camera":"cam1",  
+"date":"2021-11-03",  
+"time":"05-01-12",  
+"temp":"21.1",   
+"humid":"36.8",  
+"press":"089.4",  
+"lux":"1214.1",  
+"reason":"timer",  
+"seq":"001"}  
+.jpg  
+
+You get the sensor readings, plus the reason for the wakeup, and the sequence number of the multiple pictures per wakeup, and the name of the camera.  Plus the date for the folder, and the name of you IOTHub device.
+
+
+
+
+This file name is a modifed JSON.  If you replace all the equals with quotes (= -> ") and replace the underscores with colons (_ -> :), then you will get a proper JSON which can be used easily in any language.  But these quotes and colons do not work nicely in filenames and urls.  The filename above would come out to
+
 
 ...
 
