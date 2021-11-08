@@ -138,7 +138,7 @@ You get the sensor readings, plus the reason for the wakeup, and the sequence nu
 
 
 
-This file name is a modifed JSON.  If you replace all the equals with quotes (= -> ") and replace the underscores with colons (_ -> :), then you will get a proper JSON which can be used easily in any language.  But these quotes and colons do not work nicely in filenames and urls.  The filename above would come out to
+This file name is a modifed JSON.  If you replace all the equals with quotes ( = -> " ) and replace the underscores with colons ( _ -> : ), then you will get a proper JSON which can be used easily in any language.  But these quotes and colons do not work nicely in filenames and urls.  The filename above would come out to
 
 
 ...
