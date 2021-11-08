@@ -115,6 +115,8 @@ You need a free Azure account to use this program.  You have to give your credit
 5.  Back in the IOTHub, you need to setup that Storage Account and Storaeg Container in "File Upload" section of the IOTHub.  The directory structure within the Stoage Container is set in the software.  The program creates a folder for everyday named "20211108" or YYYYMMDD, and then all the files within the conatiner.
 6.  Set up a Computer Vision account within Azure -- the free pricing tear gives you 20 per minute, and 5000 per month.
 
+You can access the picture through the Storage Account and Storage Container, and the the name of the device (ESP32-CAM) and then the YYYYMMDD folder.  They are stored as BLOBs (binary large object) rather than the traditional file system.
+
 jzLogger/20211103/{=camera=_=cam1=,=date=_=2021-11-03=,=time=_=05-01-12=,=temp=_=21.1=,=humid=_=36.8=,=press=_=089.4=,=lux=_=1214.1=,=reason=_=timer=,=seq=_=001=}.jpg
 
 After that edit, you get the nice JSON here: 
