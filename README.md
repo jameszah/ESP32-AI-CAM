@@ -161,6 +161,7 @@ You get the sensor readings, plus the reason for the wakeup, and the sequence nu
 
 ...
 
+
 A few lines of code for the machine vision from here https://github.com/robotzero1/esp32cam-cognitive-scene
 You can buy RobotZero a coffee over there.
 
